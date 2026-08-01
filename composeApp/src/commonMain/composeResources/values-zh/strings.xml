@@ -1,0 +1,124 @@
+<resources>
+    <string name="app_name">极速24点</string>
+
+    <!-- Common -->
+    <string name="common_back">返回</string>
+    <string name="common_cancel">取消</string>
+    <string name="common_confirm">确认</string>
+    <string name="common_score_unit"> 分</string>
+
+    <!-- Auth -->
+    <string name="auth_title">极速 24 点</string>
+    <string name="auth_welcome_back">欢迎回来</string>
+    <string name="auth_create_account">创建账号</string>
+    <string name="auth_username_label">用户名</string>
+    <string name="auth_password_label">密码</string>
+    <string name="auth_login_button">立即登录</string>
+    <string name="auth_register_button">注册账号</string>
+    <string name="auth_toggle_register">还没有账号？点击注册</string>
+    <string name="auth_toggle_login">已有账号？去登录</string>
+    <string name="auth_error_empty_fields">请输入账号和密码</string>
+    <string name="auth_error_invalid_credentials">账号或密码错误</string>
+    <string name="auth_error_user_exists">账号已存在</string>
+    <string name="auth_error_network">网络连接失败，请检查服务器</string>
+    <string name="auth_session_expired_title">登录已失效</string>
+    <string name="auth_session_expired_desc">您的账号已在其他设备登录或登录已过期，请重新登录。</string>
+
+    <!-- Game -->
+    <string name="game_nav_leaderboard">排行</string>
+    <string name="game_nav_skip">跳过</string>
+    <string name="game_nav_profile">个人中心</string>
+    <string name="game_player_label">玩家: %1$s</string>
+    <string name="game_level_label">等级: %1$s</string>
+    <string name="game_score_label">得分: %1$d</string>
+    <string name="game_progress_label">进度: %1$d/10</string>
+    <string name="game_expression_placeholder">开始构造你的 24 点...</string>
+    <string name="game_action_undo">回退</string>
+    <string name="game_action_reset">重置</string>
+    <string name="game_action_hint_count">提示 (%1$d)</string>
+    <string name="game_action_submit">提交答案</string>
+    <string name="game_success_message">太棒了！+%1$d分</string>
+    <string name="game_error_wrong_result">结果不是24，再试试吧！</string>
+    <string name="game_error_all_numbers">请使用所有数字！</string>
+    <string name="game_level_up_message">恭喜升至：%1$s！</string>
+    <string name="game_achievement_unlocked">解锁成就：%1$s 🏆</string>
+    <string name="game_fever_mode_ended">狂热模式结束！</string>
+    <string name="game_fever_game_over">狂热模式结束！</string>
+    <string name="game_fever_combo">%1$d COMBO!</string>
+    <string name="game_fever_excellent">EXCELLENT!</string>
+    <string name="game_fever_try_again">TRY AGAIN</string>
+
+    <!-- Game Lock -->
+    <string name="game_lock_title">巅峰之战</string>
+    <string name="game_lock_subtitle">最后一题：巅峰挑战</string>
+    <string name="game_lock_desc">解锁本级最后一题</string>
+    <string name="game_lock_requirement">观看 2 个广告以解锁本级最后一题</string>
+    <string name="game_lock_unlock_button">点击解锁 (%1$d/2)</string>
+    <string name="game_lock_unlocked_msg">最后一题已解锁！</string>
+
+    <!-- Hints -->
+    <string name="game_hint_dialog_title">灵感枯竭？</string>
+    <string name="game_hint_dialog_desc">当前提示额度: %1$d / 5\n看个短视频，为你的智慧续费吧！</string>
+    <string name="game_hint_ad_get">领额度 (+1)</string>
+    <string name="game_hint_use_now">立即提示</string>
+    <string name="game_hint_cancel">再想想</string>
+    <string name="game_hint_smart">尝试先将 %1$d 和 %2$d 进行 %3$s</string>
+    <string name="game_hint_expression">算式提示: %1$s...</string>
+    <string name="game_hint_full_solution">完整解法: %1$s</string>
+    <string name="game_hint_limit_reached">提示额度已达上限(5个)！</string>
+    <string name="game_hint_ad_reward">广告观看完毕，获得1个提示额度！</string>
+    <string name="game_hint_ad_progress">广告观看完毕 (%1$d/2)</string>
+
+    <!-- Ad -->
+    <string name="ad_label">AD</string>
+    <string name="ad_content_title">精彩广告内容</string>
+    <string name="ad_content_subtitle">支持开发者，获取智慧提示</string>
+    <string name="ad_timer_label">%1$ds</string>
+    <string name="ad_exit_dialog_title">放弃奖励？</string>
+    <string name="ad_exit_dialog_desc">广告未播完，现在退出将无法获得奖励。确定退出吗？</string>
+    <string name="ad_exit_dialog_desc_alt">广告即将播完，现在退出将无法获得提示额度。</string>
+    <string name="ad_exit_dialog_confirm">确定退出</string>
+    <string name="ad_exit_dialog_confirm_alt">残忍离开</string>
+    <string name="ad_exit_dialog_cancel">继续观看</string>
+
+    <!-- Leaderboard -->
+    <string name="leaderboard_title">排行榜</string>
+    <string name="leaderboard_empty_title">暂无榜单数据</string>
+    <string name="leaderboard_empty_desc">快去进行挑战，成为首位登榜者吧！</string>
+
+    <!-- Profile -->
+    <string name="profile_title">个人中心</string>
+    <string name="profile_nickname_label">新昵称</string>
+    <string name="profile_nickname_display">昵称</string>
+    <string name="profile_username_display">用户名</string>
+    <string name="profile_level_display">当前等级</string>
+    <string name="profile_score_display">总积分</string>
+    <string name="profile_action_change_password">修改密码</string>
+    <string name="profile_action_logout">退出登录</string>
+    <string name="profile_error_empty_nickname">昵称不能为空</string>
+    <string name="profile_error_wrong_old_password">旧密码错误</string>
+    <string name="profile_success_password_changed">密码修改成功</string>
+    <string name="profile_success_nickname_updated">昵称已更新</string>
+    <string name="profile_not_set">未设置</string>
+    <string name="profile_old_password">旧密码</string>
+    <string name="profile_new_password">新密码</string>
+
+    <!-- Operators -->
+    <string name="op_add">加法</string>
+    <string name="op_sub">减法</string>
+    <string name="op_mul">乘法</string>
+    <string name="op_div">除法</string>
+
+    <!-- Levels -->
+    <string name="level_primary">小学</string>
+    <string name="level_junior">初中</string>
+    <string name="level_senior">高中</string>
+    <string name="level_university">大学</string>
+    <string name="level_master">硕士</string>
+    <string name="level_doctor">博士</string>
+    <string name="level_postdoctor">博士后</string>
+    <string name="level_associate_professor">副教授</string>
+    <string name="level_professor">教授</string>
+    <string name="level_scientist">科学家</string>
+
+</resources>

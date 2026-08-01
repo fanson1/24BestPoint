@@ -1,0 +1,27 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- 外圈光环 -->
+    <path
+        android:pathData="M54,10C30,10 10,30 10,54C10,78 30,98 54,98C78,98 98,78 98,54C98,30 78,10 54,10ZM54,94C32,94 14,76 14,54C14,32 32,14 54,14C76,14 94,32 94,54C94,76 76,94 54,94Z"
+        android:fillColor="#33FFD700" />
+
+    <!-- 极速闪电元素 -->
+    <path
+        android:pathData="M78,42L68,54L76,54L62,72L66,58L60,58L68,42Z"
+        android:fillColor="#FFD700" />
+
+    <!-- 数字 2 -->
+    <path
+        android:pathData="M30,45C30,41 33,38 37,38C41,38 44,41 44,45C44,49 41,52 37,56L30,65V68H45V64H35L40,58C43,54 45,50 45,45C45,39 41,34 36,34C31,34 26,38 26,45H30Z"
+        android:fillColor="#FFFFD700" />
+
+    <!-- 数字 4 -->
+    <path
+        android:pathData="M58,34V56H50V60H58V68H62V60H68V56H62V34H58ZM58,56H54V42L58,56Z"
+        android:fillColor="#FFFFD700" />
+
+</vector>

@@ -1,0 +1,124 @@
+<resources>
+    <string name="app_name">Fast 24</string>
+
+    <!-- Common -->
+    <string name="common_back">Back</string>
+    <string name="common_cancel">Cancel</string>
+    <string name="common_confirm">Confirm</string>
+    <string name="common_score_unit"> pts</string>
+
+    <!-- Auth -->
+    <string name="auth_title">Fast 24</string>
+    <string name="auth_welcome_back">Welcome Back</string>
+    <string name="auth_create_account">Create Account</string>
+    <string name="auth_username_label">Username</string>
+    <string name="auth_password_label">Password</string>
+    <string name="auth_login_button">Login Now</string>
+    <string name="auth_register_button">Register</string>
+    <string name="auth_toggle_register">No account? Sign up</string>
+    <string name="auth_toggle_login">Have an account? Login</string>
+    <string name="auth_error_empty_fields">Please enter username and password</string>
+    <string name="auth_error_invalid_credentials">Invalid username or password</string>
+    <string name="auth_error_user_exists">Username already exists</string>
+    <string name="auth_error_network">Network connection failed, please check the server</string>
+    <string name="auth_session_expired_title">Session Expired</string>
+    <string name="auth_session_expired_desc">Your account has been logged in on another device or your session has expired. Please login again.</string>
+
+    <!-- Game -->
+    <string name="game_nav_leaderboard">Leaderboard</string>
+    <string name="game_nav_skip">Skip</string>
+    <string name="game_nav_profile">Profile</string>
+    <string name="game_player_label">Player: %1$s</string>
+    <string name="game_level_label">Level: %1$s</string>
+    <string name="game_score_label">Score: %1$d</string>
+    <string name="game_progress_label">Progress: %1$d/10</string>
+    <string name="game_expression_placeholder">Build your 24...</string>
+    <string name="game_action_undo">Undo</string>
+    <string name="game_action_reset">Reset</string>
+    <string name="game_action_hint_count">Hint (%1$d)</string>
+    <string name="game_action_submit">Submit</string>
+    <string name="game_success_message">Awesome! +%1$d</string>
+    <string name="game_error_wrong_result">Not 24, try again!</string>
+    <string name="game_error_all_numbers">Please use all numbers!</string>
+    <string name="game_level_up_message">Level up: %1$s!</string>
+    <string name="game_achievement_unlocked">Achievement: %1$s 🏆</string>
+    <string name="game_fever_mode_ended">Fever Mode Ended!</string>
+    <string name="game_fever_game_over">Game Over!</string>
+    <string name="game_fever_combo">%1$d COMBO!</string>
+    <string name="game_fever_excellent">EXCELLENT!</string>
+    <string name="game_fever_try_again">TRY AGAIN</string>
+
+    <!-- Game Lock -->
+    <string name="game_lock_title">Peak Challenge</string>
+    <string name="game_lock_subtitle">Last Question: Peak Challenge</string>
+    <string name="game_lock_desc">Unlock final question</string>
+    <string name="game_lock_requirement">Watch 2 ads to unlock the final question</string>
+    <string name="game_lock_unlock_button">Unlock (%1$d/2)</string>
+    <string name="game_lock_unlocked_msg">Final question unlocked!</string>
+
+    <!-- Hints -->
+    <string name="game_hint_dialog_title">Need Inspiration?</string>
+    <string name="game_hint_dialog_desc">Current Hints: %1$d / 5\nWatch a video to get more hints!</string>
+    <string name="game_hint_ad_get">Get Hint (+1)</string>
+    <string name="game_hint_use_now">Use Hint</string>
+    <string name="game_hint_cancel">Not now</string>
+    <string name="game_hint_smart">Try %1$d %3$s %2$d</string>
+    <string name="game_hint_expression">Expression: %1$s...</string>
+    <string name="game_hint_full_solution">Solution: %1$s</string>
+    <string name="game_hint_limit_reached">Hint limit reached (5)!</string>
+    <string name="game_hint_ad_reward">Ad finished, 1 hint added!</string>
+    <string name="game_hint_ad_progress">Ad finished (%1$d/2)</string>
+
+    <!-- Ad -->
+    <string name="ad_label">AD</string>
+    <string name="ad_content_title">Great Content</string>
+    <string name="ad_content_subtitle">Support us and get hints</string>
+    <string name="ad_timer_label">%1$ds</string>
+    <string name="ad_exit_dialog_title">Give up reward?</string>
+    <string name="ad_exit_dialog_desc">The ad is not finished. Leaving now will result in no reward.</string>
+    <string name="ad_exit_dialog_desc_alt">The ad is almost finished. Stay for the reward!</string>
+    <string name="ad_exit_dialog_confirm">Exit</string>
+    <string name="ad_exit_dialog_confirm_alt">Leave</string>
+    <string name="ad_exit_dialog_cancel">Continue</string>
+
+    <!-- Leaderboard -->
+    <string name="leaderboard_title">Leaderboard</string>
+    <string name="leaderboard_empty_title">No Data</string>
+    <string name="leaderboard_empty_desc">Be the first to join the rank!</string>
+
+    <!-- Profile -->
+    <string name="profile_title">Profile</string>
+    <string name="profile_nickname_label">New Nickname</string>
+    <string name="profile_nickname_display">Nickname</string>
+    <string name="profile_username_display">Username</string>
+    <string name="profile_level_display">Current Level</string>
+    <string name="profile_score_display">Total Score</string>
+    <string name="profile_action_change_password">Change Password</string>
+    <string name="profile_action_logout">Logout</string>
+    <string name="profile_error_empty_nickname">Nickname cannot be empty</string>
+    <string name="profile_error_wrong_old_password">Wrong old password</string>
+    <string name="profile_success_password_changed">Password changed successfully</string>
+    <string name="profile_success_nickname_updated">Nickname updated</string>
+    <string name="profile_not_set">Not Set</string>
+    <string name="profile_old_password">Old Password</string>
+    <string name="profile_new_password">New Password</string>
+
+    <!-- Operators -->
+    <string name="op_add">Add</string>
+    <string name="op_sub">Subtract</string>
+    <string name="op_mul">Multiply</string>
+    <string name="op_div">Divide</string>
+
+    <!-- Levels -->
+    <string name="level_primary">Primary</string>
+    <string name="level_junior">Junior</string>
+    <string name="level_senior">Senior</string>
+    <string name="level_university">University</string>
+    <string name="level_master">Master</string>
+    <string name="level_doctor">PhD</string>
+    <string name="level_postdoctor">Postdoc</string>
+    <string name="level_associate_professor">Assoc Prof</string>
+    <string name="level_professor">Professor</string>
+    <string name="level_scientist">Scientist</string>
+
+</resources>
