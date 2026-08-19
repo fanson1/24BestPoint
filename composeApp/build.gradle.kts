@@ -45,7 +45,11 @@ kotlin {
             jvmTarget.set(JvmTarget.JVM_11)
         }
     }
-    
+
+    androidLibrary {
+        androidResources.enable = true
+    }
+
     jvm() // Desktop target
     
     @OptIn(org.jetbrains.kotlin.gradle.ExperimentalWasmDsl::class)

@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<network-security-config>
+<network-security-config xmlns:tools="http://schemas.android.com/tools">
     <domain-config cleartextTrafficPermitted="true">
         <domain includeSubdomains="true">192.168.50.38</domain>
         <domain includeSubdomains="true">192.168.50.39</domain>
         <domain includeSubdomains="true">192.168.50.40</domain>
         <domain includeSubdomains="true">192.168.50.41</domain>
+        <domain includeSubdomains="true"
+            tools:ignore="NetworkSecurityConfig">192.168.31.150</domain>
         <domain includeSubdomains="true">localhost</domain>
         <domain includeSubdomains="true">10.0.2.2</domain> <!-- Android Emulator Loopback -->
     </domain-config>
