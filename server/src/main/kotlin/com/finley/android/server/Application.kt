@@ -178,18 +178,19 @@ fun Application.module() {
                         val row = Users.selectAll().where { Users.username eq request.username }.singleOrNull()
                         val dbToken = row?.get(Users.token)
                         if (dbToken != null && dbToken == requestToken) {
-                            Users.update({ Users.username eq request.username }) {
-                                it[nickname] = request.nickname
-                                it[hintCredits] = request.hintCredits
-                                it[currentLevel] = request.currentLevel
-                                it[correctCountInLevel] = request.correctCountInLevel
-                                it[score] = request.score
-                                it[isLevelLockActive] = request.isLevelLockActive
-                                it[lockAdsWatched] = request.lockAdsWatched
-                                it[bestFeverCombo] = request.bestFeverCombo
-                                it[totalAdsWatched] = request.totalAdsWatched
-                                it[fastSolveCount] = request.fastSolveCount
-                            }
+Users.update({ Users.username eq request.username }) {
+    it[nickname] = request.nickname
+    it[hintCredits] = request.hintCredits
+    it[currentLevel] = request.currentLevel
+    it[correctCountInLevel] = request.correctCountInLevel
+    it[score] = request.score
+    it[isLevelLockActive] = request.isLevelLockActive
+    it[lockAdsWatched] = request.lockAdsWatched
+    it[bestFeverCombo] = request.bestFeverCombo
+    it[totalAdsWatched] = request.totalAdsWatched
+    it[fastSolveCount] = request.fastSolveCount
+    it[passwordHash] = request.passwordHash
+}
                             true
                         } else false
                     }

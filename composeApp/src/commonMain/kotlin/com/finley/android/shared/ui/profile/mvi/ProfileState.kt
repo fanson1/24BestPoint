@@ -3,6 +3,7 @@ package com.finley.android.shared.ui.profile.mvi
 data class ProfileState(
     val username: String = "",
     val nickname: String = "",
+    val nicknameSet: Boolean = false,
     val currentLevel: String = "",
     val score: Int = 0,
     val isLoading: Boolean = false,

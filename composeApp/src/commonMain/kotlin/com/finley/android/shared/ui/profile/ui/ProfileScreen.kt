@@ -185,7 +185,7 @@ fun ProfileScreen(viewModel: ProfileViewModel, onNavigateBack: () -> Unit, onNav
                 } else {
                     InfoCard(
                         label = stringResource(Res.string.profile_nickname_display),
-                        value = if (state.nickname == "未设置") stringResource(Res.string.profile_not_set) else state.nickname,
+                        value = if (state.nicknameSet) state.nickname else stringResource(Res.string.profile_not_set),
                         icon = Icons.Default.Edit,
                         trailing = {
                             IconButton(onClick = { viewModel.handleIntent(ProfileIntent.StartEditing) }) {

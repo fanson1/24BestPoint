@@ -2,23 +2,38 @@ package com.finley.android.shared.ui.game.logic
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.finley.android.shared.Res
 import com.finley.android.shared.data.model.User
+import com.finley.android.shared.data.repository.GameRepository
 import com.finley.android.shared.domain.GameDifficulty
+import com.finley.android.shared.game_error_all_numbers
+import com.finley.android.shared.game_error_wrong_result
+import com.finley.android.shared.game_hint_ad_progress
+import com.finley.android.shared.game_hint_ad_reward
+import com.finley.android.shared.game_hint_expression
+import com.finley.android.shared.game_hint_full_solution
+import com.finley.android.shared.game_hint_smart
+import com.finley.android.shared.game_lock_unlocked_msg
 import com.finley.android.shared.logic.ExpressionEvaluator
+import com.finley.android.shared.logic.ExpressionToken
 import com.finley.android.shared.logic.TwentyFourSolver
 import com.finley.android.shared.logic.UserManager
-import com.finley.android.shared.ui.game.mvi.*
+import com.finley.android.shared.op_add
+import com.finley.android.shared.op_div
+import com.finley.android.shared.op_mul
+import com.finley.android.shared.op_sub
+import com.finley.android.shared.ui.game.mvi.AnswerFeedback
+import com.finley.android.shared.ui.game.mvi.AnswerFeedbackType
+import com.finley.android.shared.ui.game.mvi.GameEffect
+import com.finley.android.shared.ui.game.mvi.GameIntent
+import com.finley.android.shared.ui.game.mvi.GameState
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import kotlin.math.abs
-
-import com.finley.android.shared.data.repository.GameRepository
-import com.finley.android.shared.*
 import org.jetbrains.compose.resources.getString
-
+import kotlin.math.abs
 import kotlin.time.Clock
 
 class GameViewModel(
@@ -42,19 +57,18 @@ class GameViewModel(
     private fun observeUserChanges() {
         viewModelScope.launch {
             userManager.currentUser.collect { user ->
+                val snapshot = _state.value
                 if (user != null) {
-                    _state.update {
-                        it.copy(
-                            username = user.username,
-                            nickname = user.nickname,
-                            score = user.score,
-                            difficulty = try { GameDifficulty.valueOf(user.currentLevel) } catch(_: Exception) { GameDifficulty.PRIMARY },
-                            correctCountInLevel = user.correctCountInLevel,
-                            hintCredits = user.hintCredits,
-                            isLevelLockActive = user.isLevelLockActive,
-                            lockAdsWatched = user.lockAdsWatched
-                        )
-                    }
+                    _state.value = snapshot.copy(
+                        username = user.username,
+                        nickname = user.nickname,
+                        score = user.score,
+                        difficulty = GameDifficulty.fromKey(user.currentLevel) ?: GameDifficulty.PRIMARY,
+                        correctCountInLevel = user.correctCountInLevel,
+                        hintCredits = user.hintCredits,
+                        isLevelLockActive = user.isLevelLockActive,
+                        lockAdsWatched = user.lockAdsWatched
+                    )
                 }
             }
         }
@@ -108,14 +122,12 @@ class GameViewModel(
     private fun loadNewPuzzle() {
         viewModelScope.launch {
             _state.update { it.copy(isLoading = true) }
-            val currentDifficulty = _state.value.difficulty
-            val puzzle = TwentyFourSolver.generateSolvablePuzzle(currentDifficulty.maxNumber)
-            _state.update { 
+            val maxNumber = _state.value.difficulty.maxNumber
+            val puzzle = TwentyFourSolver.generateSolvablePuzzle(maxNumber)
+            _state.update {
                 it.copy(
                     numbers = puzzle,
-                    selectedIndices = emptySet(),
-                    currentExpression = "",
-                    expressionHistory = emptyList(),
+                    expressionTokens = emptyList(),
                     isLoading = false,
                     isSuccess = false,
                     hintContent = null,
@@ -128,38 +140,26 @@ class GameViewModel(
 
     private fun selectNumber(index: Int, value: Int) {
         if (_state.value.selectedIndices.contains(index)) return
-        val text = value.toString()
         _state.update {
-            it.copy(
-                selectedIndices = it.selectedIndices + index,
-                currentExpression = it.currentExpression + text,
-                expressionHistory = it.expressionHistory + ExpressionMove(text, index)
-            )
+            it.copy(expressionTokens = it.expressionTokens + ExpressionToken.Number(index, value))
         }
     }
 
     private fun selectOperator(operator: String) {
         _state.update {
-            it.copy(
-                currentExpression = it.currentExpression + operator,
-                expressionHistory = it.expressionHistory + ExpressionMove(operator, null)
-            )
+            it.copy(expressionTokens = it.expressionTokens + ExpressionToken.Operator(operator))
         }
     }
 
     private fun undo() {
         _state.update { state ->
-            if (state.expressionHistory.isEmpty()) return@update state
-            val lastMove = state.expressionHistory.last()
-            val newHistory = state.expressionHistory.dropLast(1)
-            val newExpression = state.currentExpression.removeSuffix(lastMove.text)
-            val newIndices = if (lastMove.numberIndex != null) state.selectedIndices - lastMove.numberIndex else state.selectedIndices
-            state.copy(currentExpression = newExpression, expressionHistory = newHistory, selectedIndices = newIndices)
+            if (state.expressionTokens.isEmpty()) return@update state
+            state.copy(expressionTokens = state.expressionTokens.dropLast(1))
         }
     }
 
     private fun reset() {
-        _state.update { it.copy(selectedIndices = emptySet(), currentExpression = "", expressionHistory = emptyList()) }
+        _state.update { it.copy(expressionTokens = emptyList()) }
     }
 
     private fun useHintFromIntent() {
@@ -203,9 +203,9 @@ class GameViewModel(
         if (hintData != null && fullSolution != null) {
             val nextHintLevel = _state.value.hintLevel + 1
             viewModelScope.launch {
-                val content = when(nextHintLevel) {
+                val content = when (nextHintLevel) {
                     1 -> {
-                        val opResource = when(hintData.third) {
+                        val opResource = when (hintData.third) {
                             "+" -> Res.string.op_add
                             "-" -> Res.string.op_sub
                             "*" -> Res.string.op_mul
@@ -230,13 +230,13 @@ class GameViewModel(
     }
 
     private fun submit() {
-        val expression = _state.value.currentExpression
-        if (expression.isEmpty()) return
-        if (_state.value.selectedIndices.size != 4) {
+        val state = _state.value
+        if (state.expressionTokens.isEmpty()) return
+        if (state.selectedIndices.size != 4) {
             viewModelScope.launch { _effect.send(GameEffect.ShowError(getString(Res.string.game_error_all_numbers))) }
             return
         }
-        val result = ExpressionEvaluator.evaluate(expression)
+        val result = ExpressionEvaluator.evaluate(state.expressionTokens)
         if (result != null && abs(result - 24.0) < 1e-6) handleSuccess() else handleFailure()
     }
 

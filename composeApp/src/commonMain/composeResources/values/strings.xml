@@ -5,6 +5,7 @@
     <string name="common_back">Back</string>
     <string name="common_cancel">Cancel</string>
     <string name="common_confirm">Confirm</string>
+    <string name="common_refresh">Refresh</string>
     <string name="common_score_unit"> pts</string>
 
     <!-- Auth -->
@@ -47,6 +48,7 @@
     <string name="game_fever_combo">%1$d COMBO!</string>
     <string name="game_fever_excellent">EXCELLENT!</string>
     <string name="game_fever_try_again">TRY AGAIN</string>
+    <string name="game_fever_mode_button">Fever Mode</string>
 
     <!-- Game Lock -->
     <string name="game_lock_title">Peak Challenge</string>
@@ -74,6 +76,7 @@
     <string name="ad_content_title">Great Content</string>
     <string name="ad_content_subtitle">Support us and get hints</string>
     <string name="ad_timer_label">%1$ds</string>
+    <string name="ad_close">Close</string>
     <string name="ad_exit_dialog_title">Give up reward?</string>
     <string name="ad_exit_dialog_desc">The ad is not finished. Leaving now will result in no reward.</string>
     <string name="ad_exit_dialog_desc_alt">The ad is almost finished. Stay for the reward!</string>
@@ -100,6 +103,7 @@
     <string name="profile_success_password_changed">Password changed successfully</string>
     <string name="profile_success_nickname_updated">Nickname updated</string>
     <string name="profile_not_set">Not Set</string>
+    <string name="profile_edit_nickname">Edit nickname</string>
     <string name="profile_old_password">Old Password</string>
     <string name="profile_new_password">New Password</string>
 

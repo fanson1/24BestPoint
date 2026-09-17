@@ -1,15 +1,13 @@
 package com.finley.android.shared.ui.game.mvi
 
 import com.finley.android.shared.domain.GameDifficulty
+import com.finley.android.shared.logic.ExpressionToken
 
 data class GameState(
     val username: String = "",
     val nickname: String? = null,
     val numbers: List<Int> = emptyList(),
-    val selectedNumbers: List<Int> = emptyList(),
-    val selectedIndices: Set<Int> = emptySet(),
-    val currentExpression: String = "",
-    val expressionHistory: List<ExpressionMove> = emptyList(),
+    val expressionTokens: List<ExpressionToken> = emptyList(),
     val score: Int = 0,
     val difficulty: GameDifficulty = GameDifficulty.PRIMARY,
     val correctCountInLevel: Int = 0,
@@ -28,7 +26,24 @@ data class GameState(
     val comboCount: Int = 0,
     val currentPuzzleStartTime: Long = 0,
     val showLevelUp: String? = null
-)
+) {
+    /** Human-readable rendering of the current expression, e.g. "12+3". */
+    val currentExpression: String
+        get() = expressionTokens.joinToString("") { token ->
+            when (token) {
+                is ExpressionToken.Number -> token.value.toString()
+                is ExpressionToken.Operator -> token.symbol
+            }
+        }
+
+    /** Indices of puzzle cards that have been used so far. */
+    val selectedIndices: Set<Int>
+        get() = buildSet {
+            for (token in expressionTokens) {
+                if (token is ExpressionToken.Number) add(token.index)
+            }
+        }
+}
 
 data class AnswerFeedback(
     val type: AnswerFeedbackType,
@@ -39,11 +54,6 @@ data class AnswerFeedback(
 enum class AnswerFeedbackType {
     CORRECT, INCORRECT
 }
-
-data class ExpressionMove(
-    val text: String,
-    val numberIndex: Int? = null
-)
 
 sealed interface GameIntent {
     object LoadNewPuzzle : GameIntent
@@ -69,5 +79,4 @@ sealed interface GameEffect {
     object NavigateToAuth : GameEffect
     data class LevelUp(val newDifficulty: String) : GameEffect
     object FeverGameOver : GameEffect
-    data class AchievementUnlocked(val title: String) : GameEffect
 }

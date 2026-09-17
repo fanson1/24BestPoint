@@ -5,6 +5,7 @@
     <string name="common_back">返回</string>
     <string name="common_cancel">取消</string>
     <string name="common_confirm">确认</string>
+    <string name="common_refresh">刷新</string>
     <string name="common_score_unit"> 分</string>
 
     <!-- Auth -->
@@ -47,6 +48,7 @@
     <string name="game_fever_combo">%1$d COMBO!</string>
     <string name="game_fever_excellent">EXCELLENT!</string>
     <string name="game_fever_try_again">TRY AGAIN</string>
+    <string name="game_fever_mode_button">狂热模式</string>
 
     <!-- Game Lock -->
     <string name="game_lock_title">巅峰之战</string>
@@ -74,6 +76,7 @@
     <string name="ad_content_title">精彩广告内容</string>
     <string name="ad_content_subtitle">支持开发者，获取智慧提示</string>
     <string name="ad_timer_label">%1$ds</string>
+    <string name="ad_close">关闭</string>
     <string name="ad_exit_dialog_title">放弃奖励？</string>
     <string name="ad_exit_dialog_desc">广告未播完，现在退出将无法获得奖励。确定退出吗？</string>
     <string name="ad_exit_dialog_desc_alt">广告即将播完，现在退出将无法获得提示额度。</string>
@@ -100,6 +103,7 @@
     <string name="profile_success_password_changed">密码修改成功</string>
     <string name="profile_success_nickname_updated">昵称已更新</string>
     <string name="profile_not_set">未设置</string>
+    <string name="profile_edit_nickname">修改昵称</string>
     <string name="profile_old_password">旧密码</string>
     <string name="profile_new_password">新密码</string>
 

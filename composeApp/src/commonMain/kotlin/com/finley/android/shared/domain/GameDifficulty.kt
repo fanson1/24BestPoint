@@ -1,7 +1,16 @@
 package com.finley.android.shared.domain
 
 import com.finley.android.shared.Res
-import com.finley.android.shared.*
+import com.finley.android.shared.level_associate_professor
+import com.finley.android.shared.level_doctor
+import com.finley.android.shared.level_junior
+import com.finley.android.shared.level_master
+import com.finley.android.shared.level_postdoctor
+import com.finley.android.shared.level_primary
+import com.finley.android.shared.level_professor
+import com.finley.android.shared.level_scientist
+import com.finley.android.shared.level_senior
+import com.finley.android.shared.level_university
 import org.jetbrains.compose.resources.StringResource
 
 enum class GameDifficulty(val labelRes: StringResource, val maxNumber: Int, val scorePerQuestion: Int) {
@@ -19,5 +28,24 @@ enum class GameDifficulty(val labelRes: StringResource, val maxNumber: Int, val 
     fun next(): GameDifficulty? {
         val nextIndex = ordinal + 1
         return if (nextIndex < entries.size) entries[nextIndex] else null
+    }
+
+    companion object {
+        fun fromKey(key: String): GameDifficulty? = entries.firstOrNull { it.name == key }
+
+        /** Legacy labels from earlier versions of the app, mapped to the stable enum keys. */
+        fun fromLegacyLabel(label: String): GameDifficulty? = when (label) {
+            "小学" -> PRIMARY
+            "初中" -> JUNIOR
+            "高中" -> SENIOR
+            "大学" -> UNIVERSITY
+            "硕士" -> MASTER
+            "博士" -> DOCTOR
+            "博士后" -> POSTDOCTOR
+            "副教授" -> ASSOCIATE_PROFESSOR
+            "教授" -> PROFESSOR
+            "科学家" -> SCIENTIST
+            else -> null
+        }
     }
 }
