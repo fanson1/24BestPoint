@@ -23,6 +23,10 @@
     <string name="auth_error_network">Network connection failed, please check the server</string>
     <string name="auth_session_expired_title">Session Expired</string>
     <string name="auth_session_expired_desc">Your account has been logged in on another device or your session has expired. Please login again.</string>
+    <string name="auth_offline_mode">Switch to Offline</string>
+    <string name="auth_online_mode">Switch to Online</string>
+    <string name="auth_offline_mode_active">Offline Mode</string>
+    <string name="auth_play_offline">Play Offline</string>
 
     <!-- Game -->
     <string name="game_nav_leaderboard">Leaderboard</string>

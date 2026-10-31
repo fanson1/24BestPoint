@@ -6,7 +6,8 @@ data class AuthState(
     val isLoading: Boolean = false,
     val isCheckingSession: Boolean = true,
     val isLoginMode: Boolean = true,
-    val errorMessage: String? = null
+    val errorMessage: String? = null,
+    val offlineMode: Boolean = false
 )
 
 sealed interface AuthIntent {
@@ -15,6 +16,7 @@ sealed interface AuthIntent {
     data class PasswordChanged(val value: String) : AuthIntent
     object ToggleMode : AuthIntent
     object Submit : AuthIntent
+    object OfflineMode : AuthIntent
 }
 
 sealed interface AuthEffect {

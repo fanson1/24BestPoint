@@ -8,11 +8,11 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
@@ -87,6 +87,7 @@ fun AuthScreen(viewModel: AuthViewModel, onNavigateToGame: () -> Unit) {
             }
         }
     }
+}
 
     Box(modifier = Modifier.fillMaxSize()) {
         Scaffold(
@@ -149,7 +150,9 @@ fun AuthScreen(viewModel: AuthViewModel, onNavigateToGame: () -> Unit) {
                         modifier = Modifier.padding(top = 34.dp)
                     ) {
                         Text(
-                            text = if (state.isLoginMode) stringResource(Res.string.auth_welcome_back) else stringResource(Res.string.auth_create_account),
+                            text = if (state.isLoginMode) stringResource(Res.string.auth_welcome_back) else stringResource(
+                                Res.string.auth_create_account
+                            ),
                             fontSize = 16.sp,
                             color = InkMuted,
                             modifier = Modifier.padding(bottom = 20.dp)
@@ -164,10 +167,25 @@ fun AuthScreen(viewModel: AuthViewModel, onNavigateToGame: () -> Unit) {
                             Column(modifier = Modifier.padding(24.dp)) {
                                 OutlinedTextField(
                                     value = state.username,
-                                    onValueChange = { viewModel.handleIntent(AuthIntent.UsernameChanged(it)) },
-                                    label = { Text(stringResource(Res.string.auth_username_label), color = InkMuted) },
+                                    onValueChange = {
+                                        viewModel.handleIntent(
+                                            AuthIntent.UsernameChanged(
+                                                it
+                                            )
+                                        )
+                                    },
+                                    label = {
+                                        Text(
+                                            stringResource(Res.string.auth_username_label),
+                                            color = InkMuted
+                                        )
+                                    },
                                     keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
-                                    keyboardActions = KeyboardActions(onNext = { focusManager.moveFocus(FocusDirection.Next) }),
+                                    keyboardActions = KeyboardActions(onNext = {
+                                        focusManager.moveFocus(
+                                            FocusDirection.Next
+                                        )
+                                    }),
                                     singleLine = true,
                                     modifier = Modifier.fillMaxWidth(),
                                     colors = OutlinedTextFieldDefaults.colors(
@@ -184,8 +202,19 @@ fun AuthScreen(viewModel: AuthViewModel, onNavigateToGame: () -> Unit) {
 
                                 OutlinedTextField(
                                     value = state.password,
-                                    onValueChange = { viewModel.handleIntent(AuthIntent.PasswordChanged(it)) },
-                                    label = { Text(stringResource(Res.string.auth_password_label), color = InkMuted) },
+                                    onValueChange = {
+                                        viewModel.handleIntent(
+                                            AuthIntent.PasswordChanged(
+                                                it
+                                            )
+                                        )
+                                    },
+                                    label = {
+                                        Text(
+                                            stringResource(Res.string.auth_password_label),
+                                            color = InkMuted
+                                        )
+                                    },
                                     visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                                     keyboardOptions = KeyboardOptions(
                                         keyboardType = KeyboardType.Password,
@@ -197,7 +226,9 @@ fun AuthScreen(viewModel: AuthViewModel, onNavigateToGame: () -> Unit) {
                                     }),
                                     singleLine = true,
                                     trailingIcon = {
-                                        IconButton(onClick = { passwordVisible = !passwordVisible }) {
+                                        IconButton(onClick = {
+                                            passwordVisible = !passwordVisible
+                                        }) {
                                             Icon(
                                                 imageVector = if (passwordVisible) Icons.Filled.Visibility else Icons.Filled.VisibilityOff,
                                                 contentDescription = null,
@@ -218,28 +249,69 @@ fun AuthScreen(viewModel: AuthViewModel, onNavigateToGame: () -> Unit) {
 
                                 Spacer(modifier = Modifier.height(28.dp))
 
-                                GradientButton(
-                                    text = if (state.isLoginMode) stringResource(Res.string.auth_login_button) else stringResource(Res.string.auth_register_button),
-                                    onClick = { viewModel.handleIntent(AuthIntent.Submit) },
-                                    enabled = !state.isLoading,
-                                    loading = state.isLoading
-                                )
-                            }
-                        }
+                                if (state.offlineMode) {
+                                    Text(
+                                        text = stringResource(Res.string.auth_offline_mode_active),
+                                        color = Rose,
+                                        fontSize = 14.sp,
+                                        modifier = Modifier.padding(bottom = 16.dp)
+                                    )
+                                    GradientButton(
+                                        text = stringResource(Res.string.auth_play_offline),
+                                        onClick = { viewModel.handleIntent(AuthIntent.Submit) },
+                                        enabled = !state.isLoading,
+                                        loading = state.isLoading
+                                    )
+                                } else {
+                                    GradientButton(
+                                        text = if (state.isLoginMode) stringResource(Res.string.auth_login_button) else stringResource(
+                                            Res.string.auth_register_button
+                                        ),
+                                        onClick = { viewModel.handleIntent(AuthIntent.Submit) },
+                                        enabled = !state.isLoading,
+                                        loading = state.isLoading
+                                    )
+                                }
 
-                        TextButton(
-                            onClick = { viewModel.handleIntent(AuthIntent.ToggleMode) },
-                            modifier = Modifier.padding(top = 18.dp)
-                        ) {
-                            Text(
-                                text = if (state.isLoginMode) stringResource(Res.string.auth_toggle_register) else stringResource(Res.string.auth_toggle_login),
-                                color = InkWhite,
-                                fontSize = 14.sp
-                            )
+                                TextButton(
+                                    onClick = { viewModel.handleIntent(AuthIntent.ToggleMode) },
+                                    modifier = Modifier.padding(top = 18.dp)
+                                ) {
+                                    Text(
+                                        text = if (state.isLoginMode) stringResource(Res.string.auth_toggle_register) else stringResource(
+                                            Res.string.auth_toggle_login
+                                        ),
+                                        color = InkWhite,
+                                        fontSize = 14.sp
+                                    )
+                                }
+
+                                if (!state.offlineMode) {
+                                    TextButton(
+                                        onClick = { viewModel.handleIntent(AuthIntent.OfflineMode) },
+                                        modifier = Modifier.padding(top = 8.dp)
+                                    ) {
+                                        Text(
+                                            text = stringResource(Res.string.auth_offline_mode),
+                                            color = Rose,
+                                            fontSize = 14.sp
+                                        )
+                                    }
+                                } else {
+                                    TextButton(
+                                        onClick = { viewModel.handleIntent(AuthIntent.OfflineMode) },
+                                        modifier = Modifier.padding(top = 8.dp)
+                                    ) {
+                                        Text(
+                                            text = stringResource(Res.string.auth_online_mode),
+                                            color = Rose,
+                                            fontSize = 14.sp
+                                        )
+                                    }
+                                }
+                            }
                         }
                     }
                 }
             }
         }
-    }
-}

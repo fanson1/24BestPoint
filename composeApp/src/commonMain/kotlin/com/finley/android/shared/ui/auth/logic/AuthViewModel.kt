@@ -6,15 +6,19 @@ import com.finley.android.shared.Res
 import com.finley.android.shared.data.repository.GameRepository
 import com.finley.android.shared.logic.SecurityUtils
 import com.finley.android.shared.logic.UserManager
+import com.finley.android.shared.data.model.User
+import com.finley.android.shared.ui.auth.logic.AuthViewModel
 import com.finley.android.shared.ui.auth.mvi.AuthEffect
 import com.finley.android.shared.ui.auth.mvi.AuthIntent
-import com.finley.android.shared.ui.auth.mvi.AuthState
 import com.finley.android.shared.auth_error_empty_fields
 import com.finley.android.shared.auth_error_network
+import com.finley.android.shared.ui.auth.mvi.AuthState
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.getString
+import kotlin.uuid.ExperimentalUuidApi
+import kotlin.uuid.Uuid
 
 class AuthViewModel(
     private val gameRepository: GameRepository,
@@ -44,6 +48,7 @@ class AuthViewModel(
             is AuthIntent.PasswordChanged -> _state.update { it.copy(password = intent.value) }
             is AuthIntent.ToggleMode -> _state.update { it.copy(isLoginMode = !it.isLoginMode) }
             is AuthIntent.Submit -> submit()
+            is AuthIntent.OfflineMode -> _state.update { it.copy(offlineMode = !it.offlineMode) }
         }
     }
 
@@ -62,16 +67,21 @@ class AuthViewModel(
                         return@launch
                     } else {
                         println("AuthViewModel: Cloud user not found for $savedUsername")
+                        _state.update { it.copy(offlineMode = true) }
                     }
+                } else {
+                    println("AuthViewModel: No saved username found")
                 }
             } catch (e: Exception) {
                 println("AuthViewModel: Auto-login error: ${e.message}")
+                _state.update { it.copy(offlineMode = true) }
             } finally {
                 _state.update { it.copy(isCheckingSession = false) }
             }
         }
     }
 
+    @OptIn(ExperimentalUuidApi::class)
     private fun submit() {
         val currentState = _state.value
         if (currentState.username.isBlank() || currentState.password.isBlank()) {
@@ -84,25 +94,48 @@ class AuthViewModel(
         viewModelScope.launch {
             _state.update { it.copy(isLoading = true) }
             try {
-                val hashedPassword = SecurityUtils.sha256(currentState.password)
-                
-                println("AuthViewModel: Requesting server auth")
-                val response = if (currentState.isLoginMode) {
-                    gameRepository.login(currentState.username, hashedPassword)
-                } else {
-                    gameRepository.register(currentState.username, hashedPassword)
-                }
-
-                println("AuthViewModel: Server response: ${response.status}")
-                if (response.status == "success" && response.user != null) {
-                    userManager.login(response.user)
+                if (currentState.offlineMode) {
+                    val hashedPassword = SecurityUtils.sha256(currentState.password)
+                    val user = User(
+                        username = currentState.username,
+                        passwordHash = hashedPassword,
+                        nickname = currentState.username,
+                        hintCredits = 0,
+                        currentLevel = "1",
+                        correctCountInLevel = 0,
+                        score = 0,
+                        isLevelLockActive = false,
+                        lockAdsWatched = 0,
+                        bestFeverCombo = 0,
+                        totalAdsWatched = 0,
+                        fastSolveCount = 0,
+                        token = Uuid.random().toString()
+                    )
+                    userManager.login(user)
                     _effect.send(AuthEffect.NavigateToGame)
                 } else {
-                    _effect.send(AuthEffect.ShowError(response.message))
+                    val hashedPassword = SecurityUtils.sha256(currentState.password)
+                    
+                    println("AuthViewModel: Requesting server auth")
+                    val response = if (currentState.isLoginMode) {
+                        gameRepository.login(currentState.username, hashedPassword)
+                    } else {
+                        gameRepository.register(currentState.username, hashedPassword)
+                    }
+
+                    println("AuthViewModel: Server response: ${response.status}")
+                    if (response.status == "success" && response.user != null) {
+                        userManager.login(response.user)
+                        _effect.send(AuthEffect.NavigateToGame)
+                    } else {
+                        _effect.send(AuthEffect.ShowError(response.message))
+                    }
                 }
             } catch (e: Exception) {
                 println("AuthViewModel: Submit error: ${e.message}")
-                _effect.send(AuthEffect.ShowError(getString(Res.string.auth_error_network)))
+                if (!currentState.offlineMode) {
+                    _effect.send(AuthEffect.ShowError(getString(Res.string.auth_error_network)))
+                }
             } finally {
                 _state.update { it.copy(isLoading = false) }
             }
